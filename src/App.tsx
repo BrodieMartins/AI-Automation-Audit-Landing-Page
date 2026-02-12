@@ -143,7 +143,7 @@ const ROICalculator = () => {
             <input
               type="range" min="1" max="100" value={teamSize}
               onChange={(e) => setTeamSize(parseInt(e.target.value))}
-              className="w-full"
+              className="w-full [&::-webkit-slider-thumb]:shadow-[0_0_15px_rgba(74,144,226,0.5)]"
             />
           </div>
 
@@ -155,7 +155,7 @@ const ROICalculator = () => {
             <input
               type="range" min="1" max="40" value={hoursPerWeek}
               onChange={(e) => setHoursPerWeek(parseInt(e.target.value))}
-              className="w-full"
+              className="w-full [&::-webkit-slider-thumb]:shadow-[0_0_15px_rgba(74,144,226,0.5)]"
             />
           </div>
 
@@ -167,7 +167,7 @@ const ROICalculator = () => {
             <input
               type="range" min="20" max="500" step="10" value={hourlyRate}
               onChange={(e) => setHourlyRate(parseInt(e.target.value))}
-              className="w-full"
+              className="w-full [&::-webkit-slider-thumb]:shadow-[0_0_15px_rgba(74,144,226,0.5)]"
             />
           </div>
         </div>
