@@ -552,14 +552,14 @@ function App() {
                   },
                   {
                     title: 'Decide Together What Makes Sense',
-                    description: 'You get clear recommendations and decide what to implement, when, and how.',
+                    description: 'You get clear, actionable recommendations and decide exactly what to implement, when, and how to maximize your ROI.',
                     icon: Zap,
                     tag: 'Action'
                   }
                 ].map((step, index) => {
                   const isActive = scrollProgress > (index / 4);
                   return (
-                    <div key={index} className={`flex flex-col md:flex-row gap-8 items-start group relative transition-all duration-500 ${isActive ? 'opacity-100' : 'opacity-30'}`}>
+                    <div key={index} className={`flex flex-col md:flex-row gap-8 items-start group relative transition-all duration-500 md:min-h-[150px] ${isActive ? 'opacity-100' : 'opacity-30'}`}>
                       <div className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 border transition-all duration-500 z-10 ${isActive ? 'bg-[#4a90e2] border-[#4a90e2] scale-110 shadow-[0_0_20px_rgba(74,144,226,0.4)]' : 'bg-[#0a0a0a] border-white/10 group-hover:border-[#4a90e2]/50'
                         }`}>
                         <step.icon className={`w-7 h-7 transition-colors duration-500 ${isActive ? 'text-white' : 'text-white/20'}`} />
