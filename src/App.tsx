@@ -60,7 +60,7 @@ const Navbar = () => {
       setLastScrollY(currentScrollY);
 
       // Active section logic
-      const sections = ['hero', 'about', 'process', 'stats', 'audit'];
+      const sections = ['hero', 'about', 'roi', 'process', 'stats', 'audit'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -79,6 +79,7 @@ const Navbar = () => {
   const navItems = [
     { label: 'Hero', id: 'hero' },
     { label: 'About', id: 'about' },
+    { label: 'ROI', id: 'roi' },
     { label: 'Process', id: 'process' },
     { label: 'Stats', id: 'stats' },
     { label: 'Audit', id: 'audit' }
@@ -114,6 +115,80 @@ const Navbar = () => {
         </button>
       </div>
     </nav>
+  );
+};
+const ROICalculator = () => {
+  const [teamSize, setTeamSize] = useState(10);
+  const [hoursPerWeek, setHoursPerWeek] = useState(15);
+  const [hourlyRate, setHourlyRate] = useState(60);
+
+  const yearlyHoursLost = teamSize * hoursPerWeek * 52;
+  const yearlyCost = yearlyHoursLost * hourlyRate;
+  const potentialSavings = yearlyCost * 0.4; // 40% efficiency gain
+
+  const formatCurrency = (val: number) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+
+  return (
+    <div className="glass p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden group border-white/20">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#4a90e2] opacity-5 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2" />
+
+      <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="space-y-10">
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <label className="text-sm font-bold uppercase tracking-widest text-[#4a90e2]">Team Size</label>
+              <span className="text-2xl font-bold text-white">{teamSize} people</span>
+            </div>
+            <input
+              type="range" min="1" max="100" value={teamSize}
+              onChange={(e) => setTeamSize(parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <label className="text-sm font-bold uppercase tracking-widest text-[#4a90e2]">Manual Hours / Person / Week</label>
+              <span className="text-2xl font-bold text-white">{hoursPerWeek} hrs</span>
+            </div>
+            <input
+              type="range" min="1" max="40" value={hoursPerWeek}
+              onChange={(e) => setHoursPerWeek(parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <label className="text-sm font-bold uppercase tracking-widest text-[#4a90e2]">Avg. Hourly Rate</label>
+              <span className="text-2xl font-bold text-white">{formatCurrency(hourlyRate)}/hr</span>
+            </div>
+            <input
+              type="range" min="20" max="500" step="10" value={hourlyRate}
+              onChange={(e) => setHourlyRate(parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-6">
+          <div className="p-8 rounded-2xl bg-white/5 border border-white/10 group-hover:border-[#4a90e2]/30 transition-colors">
+            <p className="text-sm text-white/40 uppercase tracking-widest font-bold mb-2">Yearly Hours Lost</p>
+            <h4 className="text-4xl font-bold text-white">{yearlyHoursLost.toLocaleString()} hrs</h4>
+          </div>
+          <div className="p-8 rounded-2xl bg-white/5 border border-white/10 group-hover:border-[#4a90e2]/30 transition-colors">
+            <p className="text-sm text-white/40 uppercase tracking-widest font-bold mb-2">Yearly Financial Cost</p>
+            <h4 className="text-4xl font-bold text-white">{formatCurrency(yearlyCost)}</h4>
+          </div>
+          <div className="p-8 rounded-[2rem] bg-[#4a90e2]/10 border-2 border-[#4a90e2]/50 shadow-[0_0_30px_rgba(74,144,226,0.2)]">
+            <p className="text-sm text-[#4a90e2] uppercase tracking-widest font-bold mb-2">Potential Annual Savings</p>
+            <h4 className="text-5xl md:text-6xl font-black text-white">{formatCurrency(potentialSavings)}</h4>
+            <p className="text-xs text-white/30 mt-4 italic font-medium">*Based on average 40% efficiency gains through systematic automation</p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -317,12 +392,11 @@ function App() {
       <section id="hero" className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
         <ScrollReveal>
           <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
-            <div className="relative mb-8 group">
-              <div className="absolute -inset-4 bg-[#4a90e2] opacity-20 blur-3xl rounded-full group-hover:opacity-40 transition-opacity duration-1000" />
+            <div className="absolute -top-20 -left-20 w-96 h-96 opacity-20 pointer-events-none blur-sm hidden lg:block">
               <img
                 src="/hero-visual.png"
-                alt="AI Automation Visual"
-                className="w-64 h-64 md:w-96 md:h-96 object-contain animate-float relative z-10"
+                alt="AI Automation Visual Decor"
+                className="w-full h-full object-contain animate-float"
               />
             </div>
 
@@ -331,7 +405,7 @@ function App() {
               <span>Powering the next generation of operations</span>
             </div>
 
-            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-[1.1] animate-reveal stagger-2">
+            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-[1.1] animate-reveal stagger-2 max-w-5xl">
               Your operations shouldn't feel like <span className="text-gradient drop-shadow-[0_0_15px_rgba(74,144,226,0.3)]">firefighting</span>
             </h1>
 
@@ -419,12 +493,25 @@ function App() {
         </ScrollReveal>
       </section>
 
+      {/* ROI Calculator Section */}
+      <section id="roi" className="py-32 px-6">
+        <ScrollReveal>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">Automation ROI Calculator</h2>
+              <p className="text-2xl text-white/50">See how much operational friction is costing your business</p>
+            </div>
+            <ROICalculator />
+          </div>
+        </ScrollReveal>
+      </section>
+
       <div className="h-24 bg-gradient-to-t from-transparent to-[#0a0a0a]" />
 
       {/* Process Section */}
       <section id="process" ref={processRef} className="py-32 px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[50%] h-full opacity-10 pointer-events-none">
-          <img src="/process-visual.png" alt="Process Decor" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 w-full h-full opacity-10 pointer-events-none [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_100%)]">
+          <img src="/process-visual.png" alt="Process Decor" className="w-full h-full object-cover scale-110" />
         </div>
 
         <ScrollReveal>

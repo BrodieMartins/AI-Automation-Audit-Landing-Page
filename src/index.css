@@ -104,6 +104,14 @@
   .animate-scroll {
     animation: scroll 40s linear infinite;
   }
+
+  input[type='range'] {
+    @apply appearance-none bg-white/10 h-1.5 rounded-full outline-none;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    @apply appearance-none w-5 h-5 bg-[#4a90e2] rounded-full cursor-pointer shadow-[0_0_15px_rgba(74, 144, 226, 0.5)] transition-transform hover:scale-125;
+  }
 }
 
 html {
