@@ -26,6 +26,15 @@
   .glow-button {
     @apply relative before:absolute before:inset-0 before:bg-[#4a90e2] before:blur-2xl before:opacity-0 hover:before:opacity-40 before:transition-opacity before:duration-500;
   }
+
+  .noise-overlay {
+    @apply fixed inset-0 z-[100] pointer-events-none opacity-[0.03] contrast-150 brightness-150;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .nav-glass {
+    @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-2xl;
+  }
 }
 
 @layer utilities {
@@ -80,6 +89,20 @@
     50% {
       transform: translateY(-20px);
     }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 40s linear infinite;
   }
 }
 
